@@ -1,0 +1,76 @@
+import { Users } from "lucide-react";
+
+import type { Customer } from "../../../types/customer";
+
+import { EmptyState } from "../../../shared/components/EmptyState";
+import { StatusBadge } from "../../../shared/components/StatusBadge";
+
+interface CustomerTableProps {
+  customers: Customer[];
+}
+
+export function CustomerTable({
+  customers,
+}: CustomerTableProps) {
+  if (customers.length === 0) {
+    return (
+      <EmptyState
+        title="No customers found"
+        description="Customer records will appear here."
+        icon={<Users size={22} />}
+      />
+    );
+  }
+
+  return (
+    <div className="customers-table-wrapper">
+      <table className="data-table customers-table">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {customers.map((customer) => (
+            <tr key={customer.id}>
+              <td>
+                <div className="table-main-cell">
+                  <div className="mini-icon">
+                    <Users size={18} />
+                  </div>
+
+                  <div>
+                    <strong>{customer.fullName}</strong>
+                  </div>
+                </div>
+              </td>
+
+              <td>{customer.phone || "-"}</td>
+              <td>{customer.email || "-"}</td>
+              <td>{customer.address || "-"}</td>
+
+              <td>
+                <StatusBadge
+                  variant={
+                    customer.active
+                      ? "success"
+                      : "danger"
+                  }
+                >
+                  {customer.active
+                    ? "Active"
+                    : "Inactive"}
+                </StatusBadge>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

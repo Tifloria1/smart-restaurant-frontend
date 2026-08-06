@@ -1,0 +1,50 @@
+.products-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.products-table-wrapper {
+  overflow-x: auto;
+}
+
+.products-table {
+  width: 100%;
+}
+
+.products-table .table-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.products-table .mini-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+}
+
+.products-table .table-main-cell p {
+  margin: 4px 0 0;
+}
+
+.product-modal textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+@media (max-width: 768px) {
+  .products-page .page-header {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .products-table {
+    min-width: 850px;
+  }
+}

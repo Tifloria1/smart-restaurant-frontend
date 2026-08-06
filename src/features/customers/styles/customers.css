@@ -1,0 +1,92 @@
+/* =========================================
+   CUSTOMERS PAGE
+========================================= */
+
+.customers-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   CUSTOMERS TABLE
+========================================= */
+
+.customers-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.customers-table {
+  width: 100%;
+}
+
+.customers-table .table-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.customers-table .mini-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+}
+
+.customers-table strong {
+  display: block;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.customers-empty-state {
+  padding: 48px 20px;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* =========================================
+   CUSTOMER MODAL
+========================================= */
+
+.customer-modal {
+  width: min(520px, calc(100vw - 32px));
+}
+
+.customers-modal-message {
+  padding: 24px;
+  margin: 16px 0;
+
+  border-radius: 10px;
+
+  background: #f5f7fa;
+  color: #6b7280;
+
+  text-align: center;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .customers-page .page-header {
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .customers-page .page-header .primary-button {
+    width: 100%;
+  }
+
+  .customers-table {
+    min-width: 760px;
+  }
+}

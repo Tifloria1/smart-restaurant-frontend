@@ -1,0 +1,188 @@
+import {
+  Edit,
+  Package,
+  Trash2,
+} from "lucide-react";
+
+import type {
+  Product,
+} from "../../../types/product";
+
+interface Props {
+  products: Product[];
+
+  onEdit: (
+    product: Product
+  ) => void;
+
+  onDelete: (
+    productId: number
+  ) => void;
+}
+
+export function ProductTable({
+  products,
+  onEdit,
+  onDelete,
+}: Props) {
+  if (products.length === 0) {
+    return (
+      <div className="empty-state">
+        No products found.
+      </div>
+    );
+  }
+
+  return (
+    <div className="products-table-wrapper">
+  <table className="data-table products-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+
+          <th>Category</th>
+
+          <th>Price</th>
+
+          <th>Stock</th>
+
+          <th>Destination</th>
+
+          <th>Status</th>
+
+          <th
+            style={{
+              width: 120,
+            }}
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {products.map(
+          (product) => (
+            <tr
+              key={product.id}
+            >
+              <td>
+                <div className="table-main-cell">
+                  <div className="mini-icon">
+                    <Package
+                      size={
+                        18
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <strong>
+                      {
+                        product.name
+                      }
+                    </strong>
+
+                    <p>
+                      {product.description ||
+                        "No description"}
+                    </p>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                {
+                  product.categoryName
+                }
+              </td>
+
+              <td>
+                {Number(
+                  product.price
+                ).toFixed(
+                  2
+                )}{" "}
+                MAD
+              </td>
+
+              <td>
+                <span
+                  className={
+                    product.stockQuantity <=
+                    product.stockAlertThreshold
+                      ? "status danger"
+                      : "badge"
+                  }
+                >
+                  {
+                    product.stockQuantity
+                  }
+                </span>
+              </td>
+
+              <td>
+                <span className="badge">
+                  {
+                    product.destination
+                  }
+                </span>
+              </td>
+
+              <td>
+                <span
+                  className={
+                    product.active
+                      ? "status success"
+                      : "status danger"
+                  }
+                >
+                  {product.active
+                    ? "Active"
+                    : "Inactive"}
+                </span>
+              </td>
+
+              <td>
+                <div className="action-buttons">
+                  <button
+                    type="button"
+                    className="icon-action"
+                    onClick={() =>
+                      onEdit(
+                        product
+                      )
+                    }
+                  >
+                    <Edit
+                      size={
+                        16
+                      }
+                    />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="icon-action danger"
+                    onClick={() =>
+                      onDelete(
+                        product.id
+                      )
+                    }
+                  >
+                    <Trash2
+                      size={
+                        16
+                      }
+                    />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          )
+        )}
+      </tbody>
+      </table>
+</div>
+  );
+}

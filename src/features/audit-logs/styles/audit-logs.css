@@ -1,0 +1,14 @@
+.audit-page{
+display:flex;
+flex-direction:column;
+gap:24px;
+}
+
+.audit-table-wrapper{
+margin-top:20px;
+overflow:auto;
+}
+
+.audit-table-wrapper table{
+min-width:900px;
+}

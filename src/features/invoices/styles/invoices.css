@@ -1,0 +1,79 @@
+/* =========================================
+   INVOICES PAGE
+========================================= */
+
+.invoices-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.invoices-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.invoices-table {
+  width: 100%;
+  min-width: 980px;
+}
+
+.invoice-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.invoice-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* =========================================
+   DOWNLOAD BUTTON
+========================================= */
+
+.invoices-table .icon-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button-loading-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 16px;
+
+  font-weight: 700;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .invoice-main-cell {
+    gap: 8px;
+  }
+
+  .invoice-icon {
+    width: 32px;
+    height: 32px;
+  }
+}

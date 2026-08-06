@@ -1,0 +1,224 @@
+/* =========================================
+   DASHBOARD PAGE
+========================================= */
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dashboard-stat-card {
+  min-height: 125px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.dashboard-stat-card__icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.dashboard-stat-card p {
+  margin: 0;
+
+  font-size: 13px;
+  color: #64748b;
+}
+
+.dashboard-stat-card h3 {
+  margin: 6px 0 0;
+
+  font-size: 20px;
+  color: #0f172a;
+}
+
+/* =========================================
+   CHARTS
+========================================= */
+
+.dashboard-charts-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dashboard-chart-card {
+  min-width: 0;
+}
+
+.dashboard-chart-card > h3 {
+  margin: 0 0 20px;
+}
+
+.dashboard-chart-container {
+  width: 100%;
+  height: 280px;
+}
+
+/* =========================================
+   BOTTOM GRID
+========================================= */
+
+.dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(300px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.dashboard-recent-orders > h3,
+.dashboard-low-stock > h3 {
+  margin: 0;
+}
+
+.dashboard-table-wrapper {
+  width: 100%;
+  margin-top: 20px;
+
+  overflow-x: auto;
+}
+
+.dashboard-orders-table {
+  min-width: 720px;
+}
+
+/* =========================================
+   LOW STOCK
+========================================= */
+
+.dashboard-low-stock-list {
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-low-stock-item {
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #f8fafc;
+}
+
+.dashboard-low-stock-item__icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.dashboard-low-stock-item__content {
+  min-width: 0;
+  flex: 1;
+}
+
+.dashboard-low-stock-item__content strong {
+  display: block;
+}
+
+.dashboard-low-stock-item__content p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+  color: #64748b;
+}
+
+.dashboard-low-stock-item > span {
+  color: #b45309;
+
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+  .dashboard-stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-stat-card {
+    min-height: 105px;
+  }
+
+  .dashboard-low-stock-item {
+    align-items: flex-start;
+  }
+
+  .dashboard-low-stock-item > span {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,53 @@
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.restaurant-settings-form {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.restaurant-settings-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.restaurant-settings-form__full-width {
+  grid-column: 1 / -1;
+}
+
+.restaurant-settings-form__actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: flex-end;
+
+  padding-top: 4px;
+}
+
+.restaurant-settings-form__actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .restaurant-settings-form {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-settings-form__full-width,
+  .restaurant-settings-form__actions {
+    grid-column: auto;
+  }
+
+  .restaurant-settings-form__actions button {
+    width: 100%;
+  }
+}

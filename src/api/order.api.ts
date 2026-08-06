@@ -11,4 +11,12 @@ export const orderApi = {
     const response = await api.get<Order[]>("/orders");
     return response.data;
   },
+
+  cancel: async (id: number): Promise<Order> => {
+    const response = await api.patch<Order>(
+      `/orders/${id}/cancel`
+    );
+
+    return response.data;
+  },
 };

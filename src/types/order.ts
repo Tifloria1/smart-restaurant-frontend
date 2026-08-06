@@ -9,6 +9,10 @@ export interface CreateOrderRequest {
   customerId?: number | null;
   diningTableId?: number | null;
   orderType: OrderType;
+
+  discountType?: "PERCENTAGE" | "FIXED" | null;
+  discountValue?: number;
+
   items: CreateOrderItemRequest[];
 }
 
@@ -26,10 +30,17 @@ export interface Order {
   createdAt: string;
   orderType: OrderType;
   status: "PENDING" | "PAID" | "CANCELLED";
+
   totalAmount: number;
+
+  discountAmount?: number;
+  discountType?: string;
+  discountValue?: number;
+
   customerId?: number | null;
   customerName?: string | null;
   diningTableId?: number | null;
   tableNumber?: string | null;
+
   items: OrderItem[];
 }

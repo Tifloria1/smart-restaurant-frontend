@@ -1,0 +1,84 @@
+/* =========================================
+   PAYMENTS PAGE
+========================================= */
+
+.payments-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   HEADER ACTIONS
+========================================= */
+
+.payments-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.payments-method-control {
+  min-height: 40px;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  border: 1px solid #dbe1e8;
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.payments-method-control select {
+  min-width: 100px;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.payments-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.payments-table {
+  width: 100%;
+  min-width: 820px;
+}
+
+.payments-table .primary-button {
+  min-width: 90px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .payments-header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .payments-method-control {
+    width: 100%;
+  }
+
+  .payments-method-control select {
+    width: 100%;
+  }
+
+  .payments-header-actions button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,77 @@
+/* =========================================
+   ORDERS PAGE
+========================================= */
+
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.orders-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  min-width: 980px;
+}
+
+.orders-item-count {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.orders-cancel-button {
+  min-height: 36px;
+  padding: 8px 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+
+  background: #fff1f2;
+  color: #b91c1c;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.orders-cancel-button:hover:not(:disabled) {
+  background: #fee2e2;
+}
+
+.orders-cancel-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.orders-no-action {
+  color: #94a3b8;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .orders-cancel-button {
+    width: 100%;
+  }
+}

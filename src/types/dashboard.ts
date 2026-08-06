@@ -5,6 +5,8 @@ export interface DashboardStats {
   totalProducts: number;
   totalCustomers: number;
   lowStockProducts: number;
+  averageOrderValue: number;
+  openTables: number;
 }
 
 export interface TopProduct {
@@ -12,4 +14,19 @@ export interface TopProduct {
   productName: string;
   totalQuantitySold: number;
   totalRevenue: number;
+}
+
+export interface DailyRevenue {
+  date: string;
+  revenue: number;
+}
+
+export interface RecentOrder {
+  id: number;
+  createdAt: string;
+  orderType: string;
+  status: string;
+  totalAmount: number;
+  customerName?: string | null;
+  tableNumber?: string | null;
 }

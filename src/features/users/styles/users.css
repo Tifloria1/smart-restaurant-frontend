@@ -1,0 +1,68 @@
+.users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.users-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  min-width: 820px;
+}
+
+.users-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.users-role-select {
+  min-width: 130px;
+}
+
+.users-form {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.users-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.users-form label:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+  .users-form {
+    grid-template-columns: 1fr;
+  }
+
+  .users-form label:last-child {
+    grid-column: auto;
+  }
+}

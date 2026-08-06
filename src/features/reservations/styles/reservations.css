@@ -1,0 +1,69 @@
+/* =========================================
+   RESERVATIONS PAGE
+========================================= */
+
+.reservations-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.reservations-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.reservations-table {
+  width: 100%;
+  min-width: 1050px;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.reservation-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reservation-actions .secondary-button {
+  min-height: 34px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+.reservation-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.danger-button {
+  color: #b91c1c;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .reservation-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reservation-actions button {
+    width: 100%;
+  }
+}
