@@ -128,6 +128,38 @@ export function useUsers() {
       setUpdatingUserId(null);
     }
   };
+  const deleteUser = async (
+  userId: number
+) => {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this user?"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+    setUpdatingUserId(userId);
+
+    await userApi.delete(userId);
+
+    toast.success("User deleted successfully");
+
+    await loadUsers();
+  } catch (error) {
+    console.error(
+      "Failed to delete user",
+      error
+    );
+
+    toast.error(
+      "Unable to delete this user. Deactivate the account instead if it has existing activity."
+    );
+  } finally {
+    setUpdatingUserId(null);
+  }
+};
 
   return {
     users,
@@ -139,5 +171,6 @@ export function useUsers() {
     createUser,
     changeRole,
     toggleActive,
+    deleteUser,
   };
 }

@@ -8,14 +8,9 @@ import type { Order } from "../../../types/order";
 import type { PaymentMethod } from "../../../types/payment";
 
 export function usePayments() {
-  const [orders, setOrders] =
-    useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
-  const [method, setMethod] =
-    useState<PaymentMethod>("CASH");
-
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
   const [payingId, setPayingId] =
     useState<number | null>(null);
@@ -26,13 +21,11 @@ export function usePayments() {
 
       const data = await orderApi.getAll();
 
-      const pendingOrders =
-        Array.isArray(data)
-          ? data.filter(
-              (order) =>
-                order.status === "PENDING"
-            )
-          : [];
+      const pendingOrders = Array.isArray(data)
+        ? data.filter(
+            (order) => order.status === "PENDING"
+          )
+        : [];
 
       setOrders(pendingOrders);
     } catch (error) {
@@ -56,20 +49,18 @@ export function usePayments() {
   }, []);
 
   const payOrder = async (
-    orderId: number
+    orderId: number,
+    method: PaymentMethod
   ) => {
     try {
       setPayingId(orderId);
 
-      await paymentApi.payOrder(
-        orderId,
-        {
-          method,
-        }
-      );
+      await paymentApi.payOrder(orderId, {
+        method,
+      });
 
       toast.success(
-        `Order #${orderId} paid successfully`
+        `Order #${orderId} paid successfully by ${method}`
       );
 
       await loadOrders();
@@ -89,11 +80,9 @@ export function usePayments() {
 
   return {
     orders,
-    method,
     loading,
     payingId,
 
-    setMethod,
     loadOrders,
     payOrder,
   };

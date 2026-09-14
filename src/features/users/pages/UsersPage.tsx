@@ -20,6 +20,7 @@ export function UsersPage() {
     createUser,
     changeRole,
     toggleActive,
+    deleteUser,
   } = useUsers();
 
   const [modalOpen, setModalOpen] =
@@ -53,6 +54,7 @@ export function UsersPage() {
           updatingUserId={updatingUserId}
           onChangeRole={changeRole}
           onToggleActive={toggleActive}
+          onDelete={deleteUser}
         />
       </div>
 

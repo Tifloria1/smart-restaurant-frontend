@@ -1,5 +1,8 @@
+import { useState } from "react";
+
 import "../styles/reservations.css";
 
+import { ReservationFormModal } from "../components/ReservationFormModal";
 import { ReservationTable } from "../components/ReservationTable";
 import { useReservations } from "../hooks/useReservations";
 
@@ -11,8 +14,12 @@ export function ReservationsPage() {
     reservations,
     loading,
     updatingReservationId,
+    loadReservations,
     updateReservationStatus,
   } = useReservations();
+
+  const [modalOpen, setModalOpen] =
+    useState(false);
 
   if (loading) {
     return (
@@ -25,6 +32,17 @@ export function ReservationsPage() {
       <PageHeader
         title="Reservations"
         description="Manage table reservations and booking status."
+        actions={
+          <button
+            type="button"
+            className="primary-button"
+            onClick={() =>
+              setModalOpen(true)
+            }
+          >
+            Add Reservation
+          </button>
+        }
       />
 
       <div className="panel">
@@ -38,6 +56,15 @@ export function ReservationsPage() {
           }
         />
       </div>
+
+      {modalOpen && (
+        <ReservationFormModal
+          onClose={() =>
+            setModalOpen(false)
+          }
+          onSuccess={loadReservations}
+        />
+      )}
     </div>
   );
 }

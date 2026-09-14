@@ -18,6 +18,8 @@ interface CurrentCashSessionProps {
   onClose: (
     closingBalance: number
   ) => Promise<boolean>;
+
+  canOperate: boolean;
 }
 
 function formatMoney(
@@ -35,6 +37,7 @@ export function CurrentCashSession({
   actionLoading,
   onOpen,
   onClose,
+  canOperate,
 }: CurrentCashSessionProps) {
   const [openingBalance, setOpeningBalance] =
     useState(500);
@@ -55,6 +58,7 @@ export function CurrentCashSession({
 
           <div>
             <h3>Current Session</h3>
+
             <p>
               Current cash register status and balance.
             </p>
@@ -73,6 +77,7 @@ export function CurrentCashSession({
 
             <div>
               <span>Opened by</span>
+
               <strong>
                 {session.openedByName}
               </strong>
@@ -80,6 +85,7 @@ export function CurrentCashSession({
 
             <div>
               <span>Opened at</span>
+
               <strong>
                 {new Date(
                   session.openedAt
@@ -89,6 +95,7 @@ export function CurrentCashSession({
 
             <div>
               <span>Opening balance</span>
+
               <strong>
                 {formatMoney(
                   session.openingBalance
@@ -103,85 +110,87 @@ export function CurrentCashSession({
         )}
       </section>
 
-      <section className="panel cash-action-card">
-        {hasOpenSession ? (
-          <>
-            <h3>Close Session</h3>
+      {canOperate && (
+        <section className="panel cash-action-card">
+          {hasOpenSession ? (
+            <>
+              <h3>Close Session</h3>
 
-            <p>
-              Enter the real amount available in the
-              cash register.
-            </p>
+              <p>
+                Enter the real amount available in the
+                cash register.
+              </p>
 
-            <label className="cash-form-field">
-              Closing Balance
+              <label className="cash-form-field">
+                Closing Balance
 
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={closingBalance}
-                onChange={(event) =>
-                  setClosingBalance(
-                    Number(event.target.value)
-                  )
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={closingBalance}
+                  onChange={(event) =>
+                    setClosingBalance(
+                      Number(event.target.value)
+                    )
+                  }
+                />
+              </label>
+
+              <button
+                type="button"
+                className="primary-button"
+                disabled={actionLoading}
+                onClick={() =>
+                  onClose(closingBalance)
                 }
-              />
-            </label>
+              >
+                {actionLoading
+                  ? "Closing..."
+                  : "Close Cash Register"}
+              </button>
+            </>
+          ) : (
+            <>
+              <h3>Open Session</h3>
 
-            <button
-              type="button"
-              className="primary-button"
-              disabled={actionLoading}
-              onClick={() =>
-                onClose(closingBalance)
-              }
-            >
-              {actionLoading
-                ? "Closing..."
-                : "Close Cash Register"}
-            </button>
-          </>
-        ) : (
-          <>
-            <h3>Open Session</h3>
+              <p>
+                Enter the opening cash balance to start
+                the register session.
+              </p>
 
-            <p>
-              Enter the opening cash balance to start
-              the register session.
-            </p>
+              <label className="cash-form-field">
+                Opening Balance
 
-            <label className="cash-form-field">
-              Opening Balance
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={openingBalance}
+                  onChange={(event) =>
+                    setOpeningBalance(
+                      Number(event.target.value)
+                    )
+                  }
+                />
+              </label>
 
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={openingBalance}
-                onChange={(event) =>
-                  setOpeningBalance(
-                    Number(event.target.value)
-                  )
+              <button
+                type="button"
+                className="primary-button"
+                disabled={actionLoading}
+                onClick={() =>
+                  onOpen(openingBalance)
                 }
-              />
-            </label>
-
-            <button
-              type="button"
-              className="primary-button"
-              disabled={actionLoading}
-              onClick={() =>
-                onOpen(openingBalance)
-              }
-            >
-              {actionLoading
-                ? "Opening..."
-                : "Open Cash Register"}
-            </button>
-          </>
-        )}
-      </section>
+              >
+                {actionLoading
+                  ? "Opening..."
+                  : "Open Cash Register"}
+              </button>
+            </>
+          )}
+        </section>
+      )}
     </div>
   );
 }

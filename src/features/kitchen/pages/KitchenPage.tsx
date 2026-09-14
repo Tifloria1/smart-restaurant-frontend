@@ -8,27 +8,36 @@ import { useKitchen } from "../hooks/useKitchen";
 import { PageHeader } from "../../../shared/components/PageHeader";
 import { PageLoader } from "../../../shared/components/PageLoader";
 
-export function KitchenPage() {
+import type { ProductDestination } from "../../../types/kitchen";
+
+interface Props {
+  destination?: ProductDestination;
+  title?: string;
+  description?: string;
+}
+
+export function KitchenPage({
+  destination = "KITCHEN",
+  title = "Kitchen",
+  description = "Track active kitchen preparation tickets.",
+}: Props) {
   const {
     tickets,
     loading,
     updatingId,
-
     loadTickets,
     updateStatus,
-  } = useKitchen();
+  } = useKitchen(destination);
 
   if (loading) {
-    return (
-      <PageLoader message="Loading kitchen..." />
-    );
+    return <PageLoader message={`Loading ${title.toLowerCase()}...`} />;
   }
 
   return (
     <div className="kitchen-page">
       <PageHeader
-        title="Kitchen"
-        description="Track active preparation tickets."
+        title={title}
+        description={description}
         actions={
           <button
             className="secondary-button"
@@ -44,6 +53,7 @@ export function KitchenPage() {
         tickets={tickets}
         updatingId={updatingId}
         onUpdate={updateStatus}
+        stationName={title}
       />
     </div>
   );

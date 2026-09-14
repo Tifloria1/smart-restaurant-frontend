@@ -1,14 +1,247 @@
-.audit-page{
-display:flex;
-flex-direction:column;
-gap:24px;
+/* =========================================
+   AUDIT LOGS PAGE
+========================================= */
+
+.audit-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.audit-table-wrapper{
-margin-top:20px;
-overflow:auto;
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search-box {
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #64748b;
 }
 
-.audit-table-wrapper table{
-min-width:900px;
+.search-box:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-box input {
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+}
+
+.search-box input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.audit-table-wrapper {
+  width: 100%;
+  margin-top: 20px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.audit-table-wrapper table {
+  width: 100%;
+  min-width: 1050px;
+
+  border-collapse: collapse;
+}
+
+.audit-table-wrapper thead {
+  background: #f8fafc;
+}
+
+.audit-table-wrapper th {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  white-space: nowrap;
+}
+
+.audit-table-wrapper td {
+  padding: 14px 16px;
+
+  vertical-align: middle;
+
+  font-size: 13px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.audit-table-wrapper tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.audit-table-wrapper tbody tr {
+  transition: background 0.15s ease;
+}
+
+.audit-table-wrapper tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   ACTION BADGE
+========================================= */
+
+.audit-table-wrapper .badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  background: #eff6ff;
+  color: #1d4ed8;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   COLUMN BALANCE
+========================================= */
+
+.audit-table-wrapper th:nth-child(1),
+.audit-table-wrapper td:nth-child(1) {
+  min-width: 170px;
+}
+
+.audit-table-wrapper th:nth-child(2),
+.audit-table-wrapper td:nth-child(2) {
+  min-width: 150px;
+}
+
+.audit-table-wrapper th:nth-child(3),
+.audit-table-wrapper td:nth-child(3) {
+  min-width: 190px;
+}
+
+.audit-table-wrapper th:nth-child(4),
+.audit-table-wrapper td:nth-child(4) {
+  min-width: 300px;
+}
+
+.audit-table-wrapper th:nth-child(5),
+.audit-table-wrapper td:nth-child(5) {
+  min-width: 190px;
+}
+
+/* =========================================
+   AUDIT ACTION COLORS
+========================================= */
+
+/* Cash coming in */
+.audit-table-wrapper .badge.badge--cash-in {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Cash going out */
+.audit-table-wrapper .badge.badge--cash-out {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Payments */
+.audit-table-wrapper .badge.badge--payment {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* Orders */
+.audit-table-wrapper .badge.badge--order {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* Cash register open */
+.audit-table-wrapper .badge.badge--open-register {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+/* Cash register close */
+.audit-table-wrapper .badge.badge--close-register {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Cancel / destructive actions */
+.audit-table-wrapper .badge.badge--danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* Default */
+.audit-table-wrapper .badge.badge--default {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .search-box {
+    max-width: none;
+  }
+
+  .audit-table-wrapper {
+    border-radius: 12px;
+  }
 }

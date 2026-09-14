@@ -8,6 +8,34 @@ interface Props {
   logs: AuditLog[];
 }
 
+function getActionBadgeClass(action: string) {
+  switch (action) {
+    case "CASH_IN":
+      return "badge--cash-in";
+
+    case "CASH_OUT":
+      return "badge--cash-out";
+
+    case "PAYMENT_CREATED":
+      return "badge--payment";
+
+    case "CREATE_ORDER":
+      return "badge--order";
+
+    case "OPEN_CASH_REGISTER":
+      return "badge--open-register";
+
+    case "CLOSE_CASH_REGISTER":
+      return "badge--close-register";
+
+    case "CANCEL_ORDER":
+      return "badge--danger";
+
+    default:
+      return "badge--default";
+  }
+}
+
 export function AuditLogsTable({
   logs,
 }: Props) {
@@ -48,9 +76,11 @@ export function AuditLogsTable({
               </td>
 
               <td>
-                <span className="badge">
-                  {log.action}
-                </span>
+                <span
+  className={`badge ${getActionBadgeClass(log.action)}`}
+>
+  {log.action}
+</span>
               </td>
 
               <td>

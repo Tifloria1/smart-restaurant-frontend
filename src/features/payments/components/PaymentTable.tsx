@@ -1,27 +1,46 @@
+import { useState } from "react";
 import { CreditCard } from "lucide-react";
 
 import type { Order } from "../../../types/order";
 import type { PaymentMethod } from "../../../types/payment";
 
 import { EmptyState } from "../../../shared/components/EmptyState";
-import { StatusBadge } from "../../../shared/components/StatusBadge";
 
 interface PaymentTableProps {
   orders: Order[];
-  method: PaymentMethod;
   payingId: number | null;
 
   onPay: (
-    orderId: number
+    orderId: number,
+    method: PaymentMethod
   ) => Promise<void>;
 }
 
 export function PaymentTable({
   orders,
-  method,
   payingId,
   onPay,
 }: PaymentTableProps) {
+  const [methods, setMethods] = useState<
+    Record<number, PaymentMethod>
+  >({});
+
+  const getMethod = (
+    orderId: number
+  ): PaymentMethod => {
+    return methods[orderId] ?? "CASH";
+  };
+
+  const handleMethodChange = (
+    orderId: number,
+    method: PaymentMethod
+  ) => {
+    setMethods((current) => ({
+      ...current,
+      [orderId]: method,
+    }));
+  };
+
   if (orders.length === 0) {
     return (
       <EmptyState
@@ -51,12 +70,13 @@ export function PaymentTable({
             const isPaying =
               payingId === order.id;
 
+            const selectedMethod =
+              getMethod(order.id);
+
             return (
               <tr key={order.id}>
                 <td>
-                  <strong>
-                    #{order.id}
-                  </strong>
+                  <strong>#{order.id}</strong>
                 </td>
 
                 <td>
@@ -78,9 +98,26 @@ export function PaymentTable({
                 </td>
 
                 <td>
-                  <StatusBadge variant="info">
-                    {method}
-                  </StatusBadge>
+                  <select
+                    className="payment-method-select"
+                    value={selectedMethod}
+                    disabled={isPaying}
+                    onChange={(event) =>
+                      handleMethodChange(
+                        order.id,
+                        event.target
+                          .value as PaymentMethod
+                      )
+                    }
+                  >
+                    <option value="CASH">
+                      Cash
+                    </option>
+
+                    <option value="CARD">
+                      Card
+                    </option>
+                  </select>
                 </td>
 
                 <td>
@@ -89,7 +126,10 @@ export function PaymentTable({
                     className="primary-button"
                     disabled={isPaying}
                     onClick={() =>
-                      onPay(order.id)
+                      onPay(
+                        order.id,
+                        selectedMethod
+                      )
                     }
                   >
                     {isPaying

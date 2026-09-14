@@ -1,22 +1,28 @@
+import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+
 import { useAuth } from "../hooks/useAuth";
-import type { RoleName } from "../types/auth";
+import type { RoleName } from "../types/user";
 
 interface RoleRouteProps {
-  children: React.ReactNode;
   allowedRoles: RoleName[];
+  children: ReactNode;
 }
 
-export function RoleRoute({ children, allowedRoles }: RoleRouteProps) {
-  const { user, isAuthenticated } = useAuth();
+export function RoleRoute({
+  allowedRoles,
+  children,
+}: RoleRouteProps) {
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user || !allowedRoles.includes(user.role)) {
+  if (!allowedRoles.includes(user.role as RoleName)) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  return children;
+  return
+   <>{children}</>;
 }

@@ -8,19 +8,74 @@
   gap: 24px;
 }
 
+
 /* =========================================
-   TABLE
+   INVOICES TABLE
 ========================================= */
 
 .invoices-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
 }
 
 .invoices-table {
   width: 100%;
   min-width: 980px;
+
+  border-collapse: collapse;
 }
+
+.invoices-table thead {
+  background: #f8fafc;
+}
+
+.invoices-table th {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.invoices-table td {
+  padding: 14px 16px;
+
+  vertical-align: middle;
+
+  font-size: 14px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.invoices-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.invoices-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.invoices-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   INVOICE MAIN CELL
+========================================= */
 
 .invoice-main-cell {
   display: flex;
@@ -44,9 +99,45 @@
   color: #0f172a;
 }
 
+.invoice-main-cell strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+
 /* =========================================
    DOWNLOAD BUTTON
 ========================================= */
+
+.invoices-table .icon-action {
+  width: 36px;
+  height: 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #dbe3ee;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #334155;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.invoices-table .icon-action:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #2563eb;
+}
 
 .invoices-table .icon-action:disabled {
   opacity: 0.55;
@@ -63,11 +154,16 @@
   font-weight: 700;
 }
 
+
 /* =========================================
    RESPONSIVE
 ========================================= */
 
 @media (max-width: 768px) {
+  .invoices-table-wrapper {
+    border-radius: 12px;
+  }
+
   .invoice-main-cell {
     gap: 8px;
   }

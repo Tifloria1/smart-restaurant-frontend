@@ -1,4 +1,4 @@
-export type ProductDestination = "NONE" | "KITCHEN" | "BAR";
+export type ProductDestination = "NONE" | "KITCHEN" | "BAR" | "PATISSERIE";
 
 export interface Product {
   id: number;
@@ -30,6 +30,7 @@ export interface CreateProductRequest {
   stockAlertThreshold: number;
   destination: ProductDestination;
   categoryId: number;
+  active?: boolean;
 }
 
 export interface UpdateProductRequest {

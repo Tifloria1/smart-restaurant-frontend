@@ -1,3 +1,182 @@
+.orders-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.orders-transfer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-height: 34px;
+  padding: 0 12px;
+
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #1d4ed8;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.orders-transfer-button:hover:not(:disabled) {
+  background: #f5f8ff;
+}
+
+.orders-transfer-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.orders-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.orders-transfer-modal {
+  width: 100%;
+  max-width: 460px;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+  background: #ffffff;
+
+  box-shadow:
+    0 24px 60px
+    rgba(15, 23, 42, 0.18);
+}
+
+.orders-transfer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.orders-transfer-modal-header h2 {
+  margin: 0;
+
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.orders-transfer-modal-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+.orders-modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #64748b;
+
+  cursor: pointer;
+}
+
+.orders-transfer-modal-body {
+  padding: 24px;
+}
+
+.orders-transfer-current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+  padding: 14px 16px;
+
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.orders-transfer-current span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.orders-transfer-current strong {
+  font-size: 15px;
+}
+
+.orders-transfer-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.orders-transfer-modal select {
+  width: 100%;
+  height: 42px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dbe1ea;
+  border-radius: 9px;
+
+  background: #ffffff;
+  font: inherit;
+
+  outline: none;
+}
+
+.orders-transfer-modal select:focus {
+  border-color: #2563eb;
+}
+
+.orders-no-free-tables {
+  margin: 10px 0 0;
+
+  color: #b45309;
+  font-size: 13px;
+}
+
+.orders-transfer-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding: 16px 24px;
+
+  border-top: 1px solid #e5e7eb;
+  background: #fafafa;
+}
+
 /* =========================================
    ORDERS PAGE
 ========================================= */
@@ -8,18 +187,80 @@
   gap: 24px;
 }
 
+
 /* =========================================
-   TABLE
+   ORDERS TABLE
 ========================================= */
 
 .orders-table-wrapper {
   width: 100%;
   overflow-x: auto;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  overflow-y: hidden;
 }
 
 .orders-table {
   width: 100%;
   min-width: 980px;
+
+  border-collapse: collapse;
+}
+
+.orders-table thead {
+  background: #f8fafc;
+}
+
+.orders-table th {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.orders-table td {
+  padding: 14px 16px;
+
+  vertical-align: middle;
+
+  font-size: 14px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.orders-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.orders-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.orders-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   ORDER NUMBER
+========================================= */
+
+.orders-table td:first-child strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .orders-item-count {
@@ -29,8 +270,9 @@
   color: #64748b;
 }
 
+
 /* =========================================
-   ACTIONS
+   CANCEL ACTION
 ========================================= */
 
 .orders-cancel-button {
@@ -48,13 +290,19 @@
   background: #fff1f2;
   color: #b91c1c;
 
+  font-size: 13px;
   font-weight: 700;
 
   cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .orders-cancel-button:hover:not(:disabled) {
   background: #fee2e2;
+  border-color: #fca5a5;
 }
 
 .orders-cancel-button:disabled {
@@ -66,11 +314,16 @@
   color: #94a3b8;
 }
 
+
 /* =========================================
    RESPONSIVE
 ========================================= */
 
 @media (max-width: 768px) {
+  .orders-table-wrapper {
+    border-radius: 12px;
+  }
+
   .orders-cancel-button {
     width: 100%;
   }

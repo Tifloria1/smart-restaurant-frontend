@@ -112,57 +112,77 @@ export function ReservationTable({
 
                 <td>
                   <div className="reservation-actions">
-                    <button
-                      type="button"
-                      className="secondary-button"
-                      disabled={
-                        isUpdating ||
-                        reservation.status === "CONFIRMED"
-                      }
-                      onClick={() =>
-                        onUpdateStatus(
-                          reservation.id,
-                          "CONFIRMED"
-                        )
-                      }
-                    >
-                      Confirm
-                    </button>
+  {reservation.status === "PENDING" && (
+    <>
+      <button
+        type="button"
+        className="secondary-button"
+        disabled={isUpdating}
+        onClick={() =>
+          onUpdateStatus(
+            reservation.id,
+            "CONFIRMED"
+          )
+        }
+      >
+        Confirm
+      </button>
 
-                    <button
-                      type="button"
-                      className="secondary-button"
-                      disabled={
-                        isUpdating ||
-                        reservation.status === "COMPLETED"
-                      }
-                      onClick={() =>
-                        onUpdateStatus(
-                          reservation.id,
-                          "COMPLETED"
-                        )
-                      }
-                    >
-                      Complete
-                    </button>
+      <button
+        type="button"
+        className="secondary-button danger-button"
+        disabled={isUpdating}
+        onClick={() =>
+          onUpdateStatus(
+            reservation.id,
+            "CANCELLED"
+          )
+        }
+      >
+        Cancel
+      </button>
+    </>
+  )}
 
-                    <button
-                      type="button"
-                      className="secondary-button danger-button"
-                      disabled={
-                        isUpdating ||
-                        reservation.status === "CANCELLED"
-                      }
-                      onClick={() =>
-                        onUpdateStatus(
-                          reservation.id,
-                          "CANCELLED"
-                        )
-                      }
-                    >
-                      Cancel
-                    </button>
-                  </div>
+  {reservation.status === "CONFIRMED" && (
+    <>
+      <button
+        type="button"
+        className="secondary-button"
+        disabled={isUpdating}
+        onClick={() =>
+          onUpdateStatus(
+            reservation.id,
+            "COMPLETED"
+          )
+        }
+      >
+        Complete
+      </button>
+
+      <button
+        type="button"
+        className="secondary-button danger-button"
+        disabled={isUpdating}
+        onClick={() =>
+          onUpdateStatus(
+            reservation.id,
+            "CANCELLED"
+          )
+        }
+      >
+        Cancel
+      </button>
+    </>
+  )}
+
+  {(reservation.status === "COMPLETED" ||
+    reservation.status === "CANCELLED") && (
+    <span className="muted">
+      No actions available
+    </span>
+  )}
+</div>
                 </td>
               </tr>
             );

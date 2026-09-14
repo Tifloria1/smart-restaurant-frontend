@@ -1,4 +1,8 @@
-import { History } from "lucide-react";
+import { useState } from "react";
+import {
+  Eye,
+  History,
+} from "lucide-react";
 
 import type {
   CashRegisterSession,
@@ -7,6 +11,8 @@ import type {
 import { EmptyState } from "../../../shared/components/EmptyState";
 import { StatusBadge } from "../../../shared/components/StatusBadge";
 
+import { CashRegisterSessionDetailsModal } from "./CashRegisterSessionDetailsModal";
+
 interface CashRegisterHistoryProps {
   history: CashRegisterSession[];
 }
@@ -14,7 +20,10 @@ interface CashRegisterHistoryProps {
 function formatMoney(
   value: number | null | undefined
 ) {
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
     return "-";
   }
 
@@ -24,6 +33,14 @@ function formatMoney(
 export function CashRegisterHistory({
   history,
 }: CashRegisterHistoryProps) {
+  const [
+    selectedSession,
+    setSelectedSession,
+  ] =
+    useState<CashRegisterSession | null>(
+      null
+    );
+
   if (history.length === 0) {
     return (
       <section className="panel">
@@ -37,103 +54,135 @@ export function CashRegisterHistory({
   }
 
   return (
-    <section className="panel">
-      <h3>Cash Register History</h3>
+    <>
+      <section className="panel">
+        <h3>Cash Register History</h3>
 
-      <div className="cash-table-wrapper">
-        <table className="data-table cash-history-table">
-          <thead>
-            <tr>
-              <th>Opened At</th>
-              <th>Closed At</th>
-              <th>Opened By</th>
-              <th>Closed By</th>
-              <th>Opening</th>
-              <th>Closing</th>
-              <th>Expected</th>
-              <th>Difference</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {history.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  {new Date(
-                    item.openedAt
-                  ).toLocaleString()}
-                </td>
-
-                <td>
-                  {item.closedAt
-                    ? new Date(
-                        item.closedAt
-                      ).toLocaleString()
-                    : "-"}
-                </td>
-
-                <td>{item.openedByName}</td>
-
-                <td>
-                  {item.closedByName || "-"}
-                </td>
-
-                <td>
-                  {formatMoney(
-                    item.openingBalance
-                  )}
-                </td>
-
-                <td>
-                  {formatMoney(
-                    item.closingBalance
-                  )}
-                </td>
-
-                <td>
-                  {formatMoney(
-                    item.expectedBalance
-                  )}
-                </td>
-
-                <td>
-                  <span
-                    className={
-                      Number(
-                        item.differenceAmount || 0
-                      ) === 0
-                        ? "cash-difference-neutral"
-                        : Number(
-                              item.differenceAmount ||
-                                0
-                            ) > 0
-                          ? "cash-difference-positive"
-                          : "cash-difference-negative"
-                    }
-                  >
-                    {formatMoney(
-                      item.differenceAmount
-                    )}
-                  </span>
-                </td>
-
-                <td>
-                  <StatusBadge
-                    variant={
-                      item.status === "OPEN"
-                        ? "info"
-                        : "success"
-                    }
-                  >
-                    {item.status}
-                  </StatusBadge>
-                </td>
+        <div className="cash-table-wrapper">
+          <table className="data-table cash-history-table">
+            <thead>
+              <tr>
+                <th>Opened At</th>
+                <th>Closed At</th>
+                <th>Opened By</th>
+                <th>Closed By</th>
+                <th>Opening</th>
+                <th>Closing</th>
+                <th>Expected</th>
+                <th>Difference</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+            </thead>
+
+            <tbody>
+              {history.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    {new Date(
+                      item.openedAt
+                    ).toLocaleString()}
+                  </td>
+
+                  <td>
+                    {item.closedAt
+                      ? new Date(
+                          item.closedAt
+                        ).toLocaleString()
+                      : "-"}
+                  </td>
+
+                  <td>
+                    {item.openedByName}
+                  </td>
+
+                  <td>
+                    {item.closedByName ||
+                      "-"}
+                  </td>
+
+                  <td>
+                    {formatMoney(
+                      item.openingBalance
+                    )}
+                  </td>
+
+                  <td>
+                    {formatMoney(
+                      item.closingBalance
+                    )}
+                  </td>
+
+                  <td>
+                    {formatMoney(
+                      item.expectedBalance
+                    )}
+                  </td>
+
+                  <td>
+                    <span
+                      className={
+                        Number(
+                          item.differenceAmount ||
+                            0
+                        ) === 0
+                          ? "cash-difference-neutral"
+                          : Number(
+                                item.differenceAmount ||
+                                  0
+                              ) > 0
+                            ? "cash-difference-positive"
+                            : "cash-difference-negative"
+                      }
+                    >
+                      {formatMoney(
+                        item.differenceAmount
+                      )}
+                    </span>
+                  </td>
+
+                  <td>
+                    <StatusBadge
+                      variant={
+                        item.status ===
+                        "OPEN"
+                          ? "info"
+                          : "success"
+                      }
+                    >
+                      {item.status}
+                    </StatusBadge>
+                  </td>
+
+                  <td>
+                    <button
+                      type="button"
+                      className="secondary-button cash-history-details-button"
+                      onClick={() =>
+                        setSelectedSession(
+                          item
+                        )
+                      }
+                    >
+                      <Eye size={15} />
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {selectedSession && (
+        <CashRegisterSessionDetailsModal
+          session={selectedSession}
+          onClose={() =>
+            setSelectedSession(null)
+          }
+        />
+      )}
+    </>
   );
 }

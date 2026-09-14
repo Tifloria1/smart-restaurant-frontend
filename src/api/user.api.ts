@@ -24,4 +24,8 @@ export const userApi = {
   deactivate: async (id: number): Promise<void> => {
     await api.patch(`/users/${id}/deactivate`);
   },
+
+  delete: async (id: number): Promise<void> => {
+  await api.delete(`/users/${id}`);
+},
 };

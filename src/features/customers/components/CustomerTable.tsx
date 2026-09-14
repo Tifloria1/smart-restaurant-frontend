@@ -1,16 +1,32 @@
-import { Users } from "lucide-react";
+import {
+  Pencil,
+  Trash2,
+  Users,
+} from "lucide-react";
 
-import type { Customer } from "../../../types/customer";
+import type {
+  Customer,
+} from "../../../types/customer";
 
 import { EmptyState } from "../../../shared/components/EmptyState";
 import { StatusBadge } from "../../../shared/components/StatusBadge";
 
 interface CustomerTableProps {
   customers: Customer[];
+
+  onEdit: (
+    customer: Customer
+  ) => void;
+
+  onDelete: (
+    customer: Customer
+  ) => void;
 }
 
 export function CustomerTable({
   customers,
+  onEdit,
+  onDelete,
 }: CustomerTableProps) {
   if (customers.length === 0) {
     return (
@@ -32,6 +48,7 @@ export function CustomerTable({
             <th>Email</th>
             <th>Address</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
@@ -45,14 +62,24 @@ export function CustomerTable({
                   </div>
 
                   <div>
-                    <strong>{customer.fullName}</strong>
+                    <strong>
+                      {customer.fullName}
+                    </strong>
                   </div>
                 </div>
               </td>
 
-              <td>{customer.phone || "-"}</td>
-              <td>{customer.email || "-"}</td>
-              <td>{customer.address || "-"}</td>
+              <td>
+                {customer.phone || "-"}
+              </td>
+
+              <td>
+                {customer.email || "-"}
+              </td>
+
+              <td>
+                {customer.address || "-"}
+              </td>
 
               <td>
                 <StatusBadge
@@ -66,6 +93,34 @@ export function CustomerTable({
                     ? "Active"
                     : "Inactive"}
                 </StatusBadge>
+              </td>
+
+              <td>
+                <div className="customer-row-actions">
+                  <button
+                    type="button"
+                    className="customer-icon-button"
+                    title="Edit customer"
+                    aria-label={`Edit ${customer.fullName}`}
+                    onClick={() =>
+                      onEdit(customer)
+                    }
+                  >
+                    <Pencil size={16} />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="customer-icon-button customer-delete-button"
+                    title="Delete customer"
+                    aria-label={`Delete ${customer.fullName}`}
+                    onClick={() =>
+                      onDelete(customer)
+                    }
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

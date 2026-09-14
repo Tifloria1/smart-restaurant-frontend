@@ -1,18 +1,81 @@
+/* =========================================
+   USERS PAGE
+========================================= */
+
 .users-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
+
+/* =========================================
+   USERS TABLE
+========================================= */
+
 .users-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
 }
 
 .users-table {
   width: 100%;
-  min-width: 820px;
+  min-width: 900px;
+
+  border-collapse: collapse;
 }
+
+.users-table thead {
+  background: #f8fafc;
+}
+
+.users-table th {
+  padding: 14px 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.users-table td {
+  padding: 14px 16px;
+
+  vertical-align: middle;
+
+  font-size: 14px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.users-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.users-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   USER MAIN CELL
+========================================= */
 
 .users-main-cell {
   display: flex;
@@ -32,13 +95,56 @@
 
   border-radius: 11px;
 
-  background: #f1f5f9;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.users-main-cell strong {
+  font-weight: 700;
   color: #0f172a;
 }
 
+
+/* =========================================
+   ROLE SELECT
+========================================= */
+
 .users-role-select {
   min-width: 130px;
+  min-height: 38px;
+
+  padding: 7px 10px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font: inherit;
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
+
+.users-role-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.users-role-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   CREATE USER FORM
+========================================= */
 
 .users-form {
   display: grid;
@@ -51,13 +157,82 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.users-form input,
+.users-form select {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font: inherit;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.users-form input:focus,
+.users-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .users-form label:last-child {
   grid-column: 1 / -1;
 }
 
+.users-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.danger-button {
+  border: 1px solid #fecaca;
+  background: #fff;
+  color: #dc2626;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.danger-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
 @media (max-width: 700px) {
+  .users-table-wrapper {
+    border-radius: 12px;
+  }
+
   .users-form {
     grid-template-columns: 1fr;
   }

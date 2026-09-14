@@ -4,7 +4,7 @@ import { ProductFormModal } from "../components/ProductFormModal";
 
 import { useProducts } from "../hooks/useProducts";
 
-import "../styles/products.css";
+
 
 
 export function ProductsPage() {
@@ -32,7 +32,7 @@ export function ProductsPage() {
   }
 
   return (
-    <div>
+     <div className="products-page">
       <div className="page-header row-between">
         <div>
           <h2>Products</h2>

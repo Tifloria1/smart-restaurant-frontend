@@ -37,6 +37,140 @@
   gap: 8px;
 }
 
+
+/* =========================================
+   SETTINGS VIEW / EDIT MODE
+========================================= */
+
+.settings-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.restaurant-settings-form label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.restaurant-settings-form input {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #0f172a;
+
+  font: inherit;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.restaurant-settings-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* READ ONLY */
+
+.restaurant-settings-form.is-readonly input:disabled {
+  opacity: 1;
+
+  cursor: default;
+
+  background: #f8fafc;
+  border-color: #e2e8f0;
+
+  color: #334155;
+}
+
+
+/* EDIT MODE */
+
+.restaurant-settings-form.is-editing {
+  border-color: #bfdbfe;
+}
+
+.restaurant-settings-form.is-editing input {
+  background: #ffffff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+  .settings-header-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .settings-header-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   SETTINGS READ-ONLY VIEW
+========================================= */
+
+.settings-details-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.settings-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.settings-detail-item {
+  padding: 20px 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.settings-detail-item:nth-child(odd) {
+  border-right: 1px solid #e2e8f0;
+}
+
+.settings-detail-item--full {
+  grid-column: 1 / -1;
+  border-right: 0 !important;
+  border-bottom: 0;
+}
+
+.settings-detail-item span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.settings-detail-item strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+
+  word-break: break-word;
+}
+
 @media (max-width: 760px) {
   .restaurant-settings-form {
     grid-template-columns: 1fr;
@@ -50,4 +184,17 @@
   .restaurant-settings-form__actions button {
     width: 100%;
   }
+
+  .settings-details-grid {
+  grid-template-columns: 1fr;
+}
+
+.settings-detail-item,
+.settings-detail-item:nth-child(odd) {
+  border-right: 0;
+}
+
+.settings-detail-item--full {
+  grid-column: auto;
+}
 }

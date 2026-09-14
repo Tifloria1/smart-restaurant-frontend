@@ -1,23 +1,54 @@
+/* =========================================
+   PAYMENT METHOD BADGES
+========================================= */
+
+.cash-history-payment-method {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cash-history-payment-method--cash {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.cash-history-payment-method--card {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* =========================================
+   CASH REGISTER PAGE
+========================================= */
+
 .cash-register-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
+
+/* =========================================
+   TOP SUMMARY
+========================================= */
+
 .cash-register-summary-grid {
   display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
-.cash-register-content-grid {
-  display: grid;
-  grid-template-columns:
-    minmax(280px, 0.8fr)
-    minmax(0, 1.7fr);
-  gap: 20px;
-  align-items: start;
+.cash-session-card,
+.cash-action-card {
+  min-width: 0;
 }
 
 .cash-section-title {
@@ -37,8 +68,8 @@
   flex-shrink: 0;
 
   border-radius: 12px;
-
   background: #f1f5f9;
+  color: #0f172a;
 }
 
 .cash-section-title h3,
@@ -46,14 +77,26 @@
 .cash-register-content-grid h3,
 .cash-register-page .panel > h3 {
   margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .cash-section-title p,
 .cash-action-card > p,
 .cash-section-description {
   margin: 6px 0 0;
+
+  font-size: 14px;
+  line-height: 1.5;
   color: #64748b;
 }
+
+
+/* =========================================
+   CURRENT SESSION
+========================================= */
 
 .cash-session-details {
   margin-top: 24px;
@@ -69,6 +112,7 @@
   gap: 20px;
 
   padding-bottom: 12px;
+
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -78,28 +122,37 @@
 }
 
 .cash-session-details span {
+  font-size: 13px;
   color: #64748b;
+}
+
+.cash-session-details strong {
+  font-size: 14px;
+  color: #0f172a;
 }
 
 .cash-register-empty {
   margin-top: 24px;
-  padding: 24px;
+  padding: 28px 20px;
 
+  border: 1px dashed #dbe3ee;
   border-radius: 12px;
 
   background: #f8fafc;
-  color: #64748b;
 
+  color: #64748b;
+  font-size: 14px;
   text-align: center;
 }
+
+
+/* =========================================
+   OPEN / CLOSE SESSION
+========================================= */
 
 .cash-action-card {
   display: flex;
   flex-direction: column;
-}
-
-.cash-action-card .primary-button {
-  margin-top: 20px;
 }
 
 .cash-form-field {
@@ -108,6 +161,59 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cash-form-field input,
+.cash-form-field select {
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 12px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #0f172a;
+  font: inherit;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.cash-form-field input:focus,
+.cash-form-field select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.cash-action-card .primary-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+/* =========================================
+   CASH MOVEMENT AREA
+========================================= */
+
+.cash-register-content-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(280px, 0.8fr)
+    minmax(0, 1.7fr);
+
+  gap: 20px;
+  align-items: start;
 }
 
 .cash-movement-form {
@@ -123,14 +229,38 @@
 }
 
 .cash-movement-form .primary-button {
+  width: 100%;
   margin-top: 4px;
 }
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
 
 .cash-table-wrapper {
   width: 100%;
   margin-top: 20px;
 
   overflow-x: auto;
+  overflow-y: hidden;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================
+   TABLES
+========================================= */
+
+.cash-movements-table,
+.cash-history-table {
+  width: 100%;
+
+  border-collapse: collapse;
 }
 
 .cash-movements-table {
@@ -141,11 +271,74 @@
   min-width: 1150px;
 }
 
+.cash-movements-table thead,
+.cash-history-table thead {
+  background: #f8fafc;
+}
+
+.cash-movements-table th,
+.cash-history-table th {
+  padding: 13px 14px;
+
+  text-align: left;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  white-space: nowrap;
+}
+
+.cash-movements-table td,
+.cash-history-table td {
+  padding: 13px 14px;
+
+  vertical-align: middle;
+
+  font-size: 13px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  white-space: nowrap;
+}
+
+.cash-movements-table tbody tr:last-child td,
+.cash-history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cash-movements-table tbody tr,
+.cash-history-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.cash-movements-table tbody tr:hover,
+.cash-history-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   MOVEMENT TYPE
+========================================= */
+
 .cash-movement-type {
   display: inline-flex;
   align-items: center;
   gap: 5px;
 }
+
+
+/* =========================================
+   DIFFERENCE
+========================================= */
 
 .cash-difference-positive {
   color: #166534;
@@ -162,6 +355,230 @@
   font-weight: 700;
 }
 
+/* =========================================
+   CASH REGISTER HISTORY - DETAILS BUTTON
+========================================= */
+
+.cash-history-details-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   HISTORICAL SESSION DETAILS MODAL
+========================================= */
+
+.cash-history-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cash-history-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cash-history-summary-card {
+  padding: 14px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #f8fafc;
+}
+
+.cash-history-summary-card span {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #64748b;
+  font-size: 12px;
+}
+
+.cash-history-summary-card strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   SESSION PERIOD
+========================================= */
+
+.cash-history-period {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.cash-history-period span {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #64748b;
+  font-size: 12px;
+}
+
+.cash-history-period strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   CASH IN / CASH OUT TOTALS
+========================================= */
+
+.cash-history-movement-totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cash-history-total-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.cash-history-total-card span {
+  display: block;
+  margin-bottom: 4px;
+
+  color: #64748b;
+  font-size: 12px;
+}
+
+.cash-history-total-card strong {
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.cash-history-total-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+}
+
+.cash-history-total-icon--in {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.cash-history-total-icon--out {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+/* =========================================
+   MOVEMENTS SECTION
+========================================= */
+
+.cash-history-movements-section {
+  margin-top: 4px;
+}
+
+.cash-history-section-header {
+  margin-bottom: 12px;
+}
+
+.cash-history-section-header h3 {
+  margin: 0;
+
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cash-history-section-header p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   MOVEMENT BADGES
+========================================= */
+
+.cash-history-movement-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cash-history-movement-badge--in {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.cash-history-movement-badge--out {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+/* =========================================
+   HISTORY DETAILS RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .cash-history-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .cash-history-summary-grid,
+  .cash-history-period,
+  .cash-history-movement-totals {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
 @media (max-width: 1000px) {
   .cash-register-summary-grid,
   .cash-register-content-grid {
@@ -174,5 +591,9 @@
     align-items: flex-start;
     flex-direction: column;
     gap: 6px;
+  }
+
+  .cash-table-wrapper {
+    border-radius: 12px;
   }
 }

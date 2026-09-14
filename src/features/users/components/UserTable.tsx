@@ -18,6 +18,7 @@ const roles: RoleName[] = [
 interface UserTableProps {
   users: AppUser[];
   updatingUserId: number | null;
+  
 
   onChangeRole: (
     userId: number,
@@ -27,6 +28,8 @@ interface UserTableProps {
   onToggleActive: (
     user: AppUser
   ) => Promise<void>;
+
+  onDelete: (userId: number) => Promise<void>;
 }
 
 export function UserTable({
@@ -34,6 +37,7 @@ export function UserTable({
   updatingUserId,
   onChangeRole,
   onToggleActive,
+  onDelete,
 }: UserTableProps) {
   if (users.length === 0) {
     return (
@@ -116,22 +120,31 @@ export function UserTable({
                   </StatusBadge>
                 </td>
 
-                <td>
-                  <button
-                    type="button"
-                    className="secondary-button"
-                    disabled={isUpdating}
-                    onClick={() =>
-                      onToggleActive(user)
-                    }
-                  >
-                    {isUpdating
-                      ? "Updating..."
-                      : user.active
-                        ? "Deactivate"
-                        : "Activate"}
-                  </button>
-                </td>
+<td>
+  <div className="users-actions">
+    <button
+      type="button"
+      className="secondary-button"
+      disabled={isUpdating}
+      onClick={() => onToggleActive(user)}
+    >
+      {isUpdating
+        ? "Updating..."
+        : user.active
+          ? "Deactivate"
+          : "Activate"}
+    </button>
+
+    <button
+      type="button"
+      className="danger-button"
+      disabled={isUpdating}
+      onClick={() => onDelete(user.id)}
+    >
+      Delete
+    </button>
+  </div>
+</td>
               </tr>
             );
           })}

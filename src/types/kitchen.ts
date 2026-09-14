@@ -1,4 +1,4 @@
-export type ProductDestination = "NONE" | "KITCHEN" | "BAR";
+export type ProductDestination = "NONE" | "KITCHEN" | "BAR" | "PATISSERIE";
 export type PreparationTicketStatus =
   | "PENDING"
   | "IN_PROGRESS"

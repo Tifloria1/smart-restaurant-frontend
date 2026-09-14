@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import "../styles/cash-register.css";
 
 import { CashMovementForm } from "../components/CashMovementForm";
@@ -6,6 +8,8 @@ import { CashRegisterHistory } from "../components/CashRegisterHistory";
 import { CurrentCashSession } from "../components/CurrentCashSession";
 
 import { useCashRegister } from "../hooks/useCashRegister";
+
+import { AuthContext } from "../../../contexts/auth-context";
 
 import { PageHeader } from "../../../shared/components/PageHeader";
 import { PageLoader } from "../../../shared/components/PageLoader";
@@ -24,6 +28,13 @@ export function CashRegisterPage() {
     closeSession,
     createMovement,
   } = useCashRegister();
+
+  const auth = useContext(AuthContext);
+
+  const role = auth?.user?.role;
+
+  const canOperateCashRegister =
+    role === "ADMIN" || role === "CASHIER";
 
   if (loading) {
     return (
@@ -53,14 +64,17 @@ export function CashRegisterPage() {
         actionLoading={actionLoading}
         onOpen={openSession}
         onClose={closeSession}
+        canOperate={canOperateCashRegister}
       />
 
       {session?.status === "OPEN" && (
         <div className="cash-register-content-grid">
-          <CashMovementForm
-            actionLoading={actionLoading}
-            onSubmit={createMovement}
-          />
+          {canOperateCashRegister && (
+            <CashMovementForm
+              actionLoading={actionLoading}
+              onSubmit={createMovement}
+            />
+          )}
 
           <CashMovementsTable
             movements={movements}

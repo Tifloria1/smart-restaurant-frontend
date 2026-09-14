@@ -1,5 +1,8 @@
 import { api } from "./axios";
-import type { CreatePaymentRequest, Payment } from "../types/payment";
+import type {
+  CreatePaymentRequest,
+  Payment,
+} from "../types/payment";
 
 export const paymentApi = {
   payOrder: async (
@@ -10,14 +13,30 @@ export const paymentApi = {
       `/payments/orders/${orderId}`,
       request
     );
+
     return response.data;
   },
 
-  downloadInvoicePdf: async (orderId: number): Promise<Blob> => {
-  const response = await api.get(`/payments/orders/${orderId}/invoice/pdf`, {
-    responseType: "blob",
-  });
+  getPaymentsByCashRegisterSession: async (
+    sessionId: number
+  ): Promise<Payment[]> => {
+    const response = await api.get<Payment[]>(
+      `/payments/cash-register-sessions/${sessionId}`
+    );
 
-  return response.data;
-},
+    return response.data;
+  },
+
+  downloadInvoicePdf: async (
+    orderId: number
+  ): Promise<Blob> => {
+    const response = await api.get(
+      `/payments/orders/${orderId}/invoice/pdf`,
+      {
+        responseType: "blob",
+      }
+    );
+
+    return response.data;
+  },
 };

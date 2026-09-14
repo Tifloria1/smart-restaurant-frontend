@@ -2,33 +2,42 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { BaseModal } from "../../../shared/components/BaseModal";
+
 import {
   customerApi,
-  type CreateCustomerRequest,
+  type UpdateCustomerRequest,
 } from "../../../api/customer.api";
 
-interface CustomerFormModalProps {
+import type {
+  Customer,
+} from "../../../types/customer";
+
+interface EditCustomerModalProps {
+  customer: Customer;
   onClose: () => void;
-  onCreated: () => Promise<void>;
+  onUpdated: () => Promise<void>;
 }
 
-export function CustomerFormModal({
+export function EditCustomerModal({
+  customer,
   onClose,
-  onCreated,
-}: CustomerFormModalProps) {
+  onUpdated,
+}: EditCustomerModalProps) {
   const [form, setForm] =
-    useState<CreateCustomerRequest>({
-      fullName: "",
-      phone: "",
-      email: "",
-      address: "",
+    useState<UpdateCustomerRequest>({
+      fullName: customer.fullName,
+      phone: customer.phone ?? "",
+      email: customer.email ?? "",
+      address: customer.address ?? "",
+      active: customer.active,
     });
 
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] =
+    useState(false);
 
   const updateField = (
-    field: keyof CreateCustomerRequest,
-    value: string
+    field: keyof UpdateCustomerRequest,
+    value: string | boolean
   ) => {
     setForm((current) => ({
       ...current,
@@ -42,31 +51,43 @@ export function CustomerFormModal({
     event.preventDefault();
 
     if (!form.fullName.trim()) {
-      toast.error("Customer name is required");
+      toast.error(
+        "Customer name is required"
+      );
+
       return;
     }
 
     try {
       setSaving(true);
 
-      await customerApi.create({
-        fullName: form.fullName.trim(),
-        phone: form.phone.trim(),
-        email: form.email.trim(),
-        address: form.address.trim(),
-      });
+      await customerApi.update(
+        customer.id,
+        {
+          ...form,
+          fullName: form.fullName.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim(),
+          address: form.address.trim(),
+        }
+      );
 
-      toast.success("Customer created successfully");
+      toast.success(
+        "Customer updated successfully"
+      );
 
-      await onCreated();
+      await onUpdated();
+
       onClose();
     } catch (error) {
       console.error(
-        "Failed to create customer",
+        "Failed to update customer",
         error
       );
 
-      toast.error("Failed to create customer");
+      toast.error(
+        "Failed to update customer"
+      );
     } finally {
       setSaving(false);
     }
@@ -74,8 +95,8 @@ export function CustomerFormModal({
 
   return (
     <BaseModal
-      title="Add Customer"
-      description="Create a new customer profile."
+      title="Edit Customer"
+      description="Update customer information and status."
       onClose={onClose}
       size="small"
     >
@@ -84,18 +105,18 @@ export function CustomerFormModal({
         onSubmit={handleSubmit}
       >
         <div className="customer-form-field">
-          <label htmlFor="customer-full-name">
+          <label htmlFor="edit-customer-name">
             Full Name
-            <span className="required-mark">*</span>
+            <span className="required-mark">
+              *
+            </span>
           </label>
 
           <input
-            id="customer-full-name"
+            id="edit-customer-name"
             type="text"
-            value={form.fullName}
             maxLength={120}
-            placeholder="e.g. John Doe"
-            autoFocus
+            value={form.fullName}
             onChange={(event) =>
               updateField(
                 "fullName",
@@ -107,16 +128,15 @@ export function CustomerFormModal({
 
         <div className="customer-form-grid">
           <div className="customer-form-field">
-            <label htmlFor="customer-phone">
+            <label htmlFor="edit-customer-phone">
               Phone
             </label>
 
             <input
-              id="customer-phone"
+              id="edit-customer-phone"
               type="tel"
-              value={form.phone}
               maxLength={30}
-              placeholder="e.g. 0600000000"
+              value={form.phone}
               onChange={(event) =>
                 updateField(
                   "phone",
@@ -127,16 +147,15 @@ export function CustomerFormModal({
           </div>
 
           <div className="customer-form-field">
-            <label htmlFor="customer-email">
+            <label htmlFor="edit-customer-email">
               Email
             </label>
 
             <input
-              id="customer-email"
+              id="edit-customer-email"
               type="email"
-              value={form.email}
               maxLength={150}
-              placeholder="customer@example.com"
+              value={form.email}
               onChange={(event) =>
                 updateField(
                   "email",
@@ -148,16 +167,15 @@ export function CustomerFormModal({
         </div>
 
         <div className="customer-form-field">
-          <label htmlFor="customer-address">
+          <label htmlFor="edit-customer-address">
             Address
           </label>
 
           <input
-            id="customer-address"
+            id="edit-customer-address"
             type="text"
-            value={form.address}
             maxLength={255}
-            placeholder="e.g. Casablanca"
+            value={form.address}
             onChange={(event) =>
               updateField(
                 "address",
@@ -165,6 +183,36 @@ export function CustomerFormModal({
               )
             }
           />
+        </div>
+
+        <div className="customer-form-field">
+          <label htmlFor="edit-customer-status">
+            Status
+          </label>
+
+          <select
+            id="edit-customer-status"
+            value={
+              form.active
+                ? "active"
+                : "inactive"
+            }
+            onChange={(event) =>
+              updateField(
+                "active",
+                event.target.value ===
+                  "active"
+              )
+            }
+          >
+            <option value="active">
+              Active
+            </option>
+
+            <option value="inactive">
+              Inactive
+            </option>
+          </select>
         </div>
 
         <div className="customer-form-actions">
@@ -183,8 +231,8 @@ export function CustomerFormModal({
             disabled={saving}
           >
             {saving
-              ? "Creating..."
-              : "Create Customer"}
+              ? "Saving..."
+              : "Save Changes"}
           </button>
         </div>
       </form>

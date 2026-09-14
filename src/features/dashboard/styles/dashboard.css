@@ -185,6 +185,140 @@
 }
 
 /* =========================================
+   DASHBOARD — FINAL UI POLISH
+========================================= */
+
+/* Charts as real cards */
+.dashboard-chart-card {
+  min-width: 0;
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.dashboard-chart-card > h3 {
+  margin: 0 0 20px;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+
+/* Recent Orders card */
+.dashboard-recent-orders {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.dashboard-recent-orders > h3 {
+  margin: 0 0 18px;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+
+/* Recent Orders table wrapper */
+.dashboard-table-wrapper {
+  width: 100%;
+  margin-top: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+
+/* Recent Orders table */
+.dashboard-orders-table {
+  width: 100%;
+  min-width: 720px;
+
+  border-collapse: collapse;
+}
+
+.dashboard-orders-table thead {
+  background: #f8fafc;
+}
+
+.dashboard-orders-table th {
+  padding: 12px 14px;
+
+  text-align: left;
+
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-orders-table td {
+  padding: 12px 14px;
+
+  font-size: 13px;
+  color: #0f172a;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-orders-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboard-orders-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.dashboard-orders-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* Low Stock card consistency */
+.dashboard-low-stock {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.dashboard-low-stock > h3 {
+  margin: 0 0 18px;
+
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* =========================================
    RESPONSIVE
 ========================================= */
 

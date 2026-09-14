@@ -29,12 +29,26 @@ export function LoginPage() {
       setLoading(true);
       setError("");
 
-      await login({
+      const loggedUser = await login({
         email,
         password,
       });
 
-      navigate("/");
+      switch (loggedUser.role) {
+        case "CASHIER":
+          navigate("/pos");
+          break;
+
+        case "KITCHEN":
+          navigate("/kitchen");
+          break;
+
+        case "ADMIN":
+        case "MANAGER":
+        default:
+          navigate("/");
+          break;
+      }
     } catch (loginError) {
       console.error(
         "Login failed",

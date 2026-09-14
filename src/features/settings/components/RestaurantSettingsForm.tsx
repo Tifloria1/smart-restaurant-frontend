@@ -7,6 +7,7 @@ import type {
 interface RestaurantSettingsFormProps {
   form: UpdateRestaurantSettingsRequest;
   saving: boolean;
+  editing: boolean;
 
   onUpdateField: (
     field: keyof UpdateRestaurantSettingsRequest,
@@ -21,9 +22,53 @@ interface RestaurantSettingsFormProps {
 export function RestaurantSettingsForm({
   form,
   saving,
+  editing,
   onUpdateField,
   onSubmit,
 }: RestaurantSettingsFormProps) {
+  if (!editing) {
+    return (
+      <section className="panel settings-details-card">
+        <div className="settings-details-grid">
+          <div className="settings-detail-item">
+            <span>Restaurant Name</span>
+            <strong>{form.restaurantName || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item">
+            <span>Address</span>
+            <strong>{form.address || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item">
+            <span>Phone</span>
+            <strong>{form.phone || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item">
+            <span>Email</span>
+            <strong>{form.email || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item">
+            <span>Tax Number</span>
+            <strong>{form.taxNumber || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item">
+            <span>Currency</span>
+            <strong>{form.currency || "-"}</strong>
+          </div>
+
+          <div className="settings-detail-item settings-detail-item--full">
+            <span>Logo URL</span>
+            <strong>{form.logoUrl || "-"}</strong>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <form
       className="panel restaurant-settings-form"

@@ -69,7 +69,7 @@ export const cashRegisterApi = {
     async (): Promise<CashMovement[]> => {
       const response =
         await api.get<CashMovement[]>(
-          "/cash-movements/current-session"
+          "/cash-movements"
         );
 
       return response.data;
