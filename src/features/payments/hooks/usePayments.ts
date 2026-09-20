@@ -6,6 +6,7 @@ import { paymentApi } from "../../../api/payment.api";
 
 import type { Order } from "../../../types/order";
 import type { PaymentMethod } from "../../../types/payment";
+import axios from "axios";
 
 export function usePayments() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -49,34 +50,53 @@ export function usePayments() {
   }, []);
 
   const payOrder = async (
-    orderId: number,
-    method: PaymentMethod
-  ) => {
-    try {
-      setPayingId(orderId);
+  orderId: number,
+  method: PaymentMethod
+) => {
+  try {
+    setPayingId(orderId);
 
-      await paymentApi.payOrder(orderId, {
-        method,
-      });
+    await paymentApi.payOrder(orderId, {
+      method,
+    });
 
-      toast.success(
-        `Order #${orderId} paid successfully by ${method}`
-      );
+    toast.success(
+      `Order #${orderId} paid successfully by ${method}`
+    );
 
-      await loadOrders();
-    } catch (error) {
-      console.error(
-        "Failed to pay order",
-        error
-      );
+    await loadOrders();
+  } catch (error: unknown) {
+    console.error("Failed to pay order", error);
 
-      toast.error(
-        "Payment failed. Make sure all preparation tickets are delivered."
-      );
-    } finally {
-      setPayingId(null);
+    let message = "Payment failed. Please try again.";
+
+    if (axios.isAxiosError(error)) {
+      const data = error.response?.data;
+
+      if (typeof data === "string" && data.trim()) {
+        message = data;
+      } else if (
+        data &&
+        typeof data === "object" &&
+        "message" in data &&
+        typeof data.message === "string"
+      ) {
+        message = data.message;
+      } else if (
+        data &&
+        typeof data === "object" &&
+        "error" in data &&
+        typeof data.error === "string"
+      ) {
+        message = data.error;
+      }
     }
-  };
+
+    toast.error(message);
+  } finally {
+    setPayingId(null);
+  }
+};
 
   return {
     orders,

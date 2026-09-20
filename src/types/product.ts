@@ -12,6 +12,7 @@ export interface Product {
   active: boolean;
   categoryId: number;
   categoryName: string;
+  imageUrl?: string | null;
 }
 
 export interface Category {

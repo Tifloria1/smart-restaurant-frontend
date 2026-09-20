@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { orderApi } from "../../../api/order.api";
 import { productApi } from "../../../api/product.api";
 import { tableApi } from "../../../api/table.api";
+import axios from "axios";
 
 import type {
   OrderType,
@@ -670,25 +671,43 @@ export function usePos() {
           // ===================================================
 
           else if (
-            selectedTable.status ===
-            "OCCUPIED"
-          ) {
-            const activeOrder =
-              await orderApi
-                .getActiveByTable(
-                  selectedTableId
-                );
+  selectedTable.status === "OCCUPIED"
+) {
+  try {
+    // Try to find an already active order for this table
+    const activeOrder =
+      await orderApi.getActiveByTable(
+        selectedTableId
+      );
 
-            const updatedOrder =
-              await orderApi.addItems(
-                activeOrder.id,
-                request
-              );
+    // Active order exists -> add the new items
+    const updatedOrder =
+      await orderApi.addItems(
+        activeOrder.id,
+        request
+      );
 
-            toast.success(
-              `Items added to order #${updatedOrder.id}`
-            );
-          }
+    toast.success(
+      `Items added to order #${updatedOrder.id}`
+    );
+  } catch (error: unknown) {
+  // A SEATED reservation can make the table OCCUPIED
+  // before the first order exists.
+  if (
+    axios.isAxiosError(error) &&
+    (error.response?.status === 400 ||
+     error.response?.status === 404)
+  ) {
+    const order = await orderApi.create(request);
+
+    toast.success(
+      `Order #${order.id} created successfully`
+    );
+  } else {
+    throw error;
+  }
+}
+}
 
           // ===================================================
           // UNKNOWN TABLE STATUS

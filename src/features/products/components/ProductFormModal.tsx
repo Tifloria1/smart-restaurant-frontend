@@ -15,7 +15,8 @@ interface ProductFormModalProps {
   product?: Product | null;
   onClose: () => void;
   onSubmit: (
-    data: CreateProductRequest
+    data: CreateProductRequest,
+    imageFile?: File | null
   ) => Promise<void>;
 }
 
@@ -31,6 +32,20 @@ export function ProductFormModal({
 
   const [loading, setLoading] =
     useState(false);
+
+  // =========================================================
+  // PRODUCT IMAGE
+  // =========================================================
+
+  const [imageFile, setImageFile] =
+    useState<File | null>(null);
+
+  const [imagePreview, setImagePreview] =
+    useState<string | null>(
+      product?.imageUrl
+        ? `http://localhost:8083${product.imageUrl}`
+        : null
+    );
 
   const [active, setActive] =
     useState(product?.active ?? true);
@@ -52,6 +67,10 @@ export function ProductFormModal({
       categoryId:
         product?.categoryId ?? 0,
     });
+
+  // =========================================================
+  // LOAD CATEGORIES
+  // =========================================================
 
   useEffect(() => {
     categoryApi
@@ -78,6 +97,25 @@ export function ProductFormModal({
       });
   }, []);
 
+  // =========================================================
+  // CLEAN IMAGE PREVIEW
+  // =========================================================
+
+  useEffect(() => {
+    return () => {
+      if (
+        imagePreview &&
+        imagePreview.startsWith("blob:")
+      ) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  // =========================================================
+  // UPDATE FIELD
+  // =========================================================
+
   const updateField = (
     field: keyof CreateProductRequest,
     value:
@@ -91,6 +129,39 @@ export function ProductFormModal({
     }));
   };
 
+  // =========================================================
+  // IMAGE CHANGE
+  // =========================================================
+
+  const handleImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file =
+      event.target.files?.[0] ?? null;
+
+    setImageFile(file);
+
+    if (!file) {
+      return;
+    }
+
+    if (
+      imagePreview &&
+      imagePreview.startsWith("blob:")
+    ) {
+      URL.revokeObjectURL(imagePreview);
+    }
+
+    const previewUrl =
+      URL.createObjectURL(file);
+
+    setImagePreview(previewUrl);
+  };
+
+  // =========================================================
+  // SUBMIT
+  // =========================================================
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
@@ -99,16 +170,23 @@ export function ProductFormModal({
     try {
       setLoading(true);
 
-      await onSubmit({
-        ...form,
-        ...(isEditing
-          ? { active }
-          : {}),
-      });
+      await onSubmit(
+        {
+          ...form,
+          ...(isEditing
+            ? { active }
+            : {}),
+        },
+        imageFile
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  // =========================================================
+  // RENDER
+  // =========================================================
 
   return (
     <BaseModal
@@ -119,7 +197,7 @@ export function ProductFormModal({
       }
       description={
         isEditing
-          ? "Update product information, pricing and stock."
+          ? "Update product information, pricing, stock and image."
           : "Create a new menu item and configure its preparation details."
       }
       onClose={onClose}
@@ -155,6 +233,58 @@ export function ProductFormModal({
         className="product-form"
         onSubmit={handleSubmit}
       >
+        {/* ===================================================
+            PRODUCT IMAGE
+        =================================================== */}
+
+        <div className="product-form__field product-form__field--full">
+          <label htmlFor="product-image">
+            Product Image
+          </label>
+
+          {imagePreview && (
+            <div
+              style={{
+                marginBottom: "12px",
+              }}
+            >
+              <img
+                src={imagePreview}
+                alt="Product preview"
+                style={{
+                  width: "120px",
+                  height: "120px",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                  border:
+                    "1px solid #e5e7eb",
+                }}
+              />
+            </div>
+          )}
+
+          <input
+            id="product-image"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            onChange={handleImageChange}
+          />
+
+          <small
+            style={{
+              display: "block",
+              marginTop: "6px",
+              color: "#64748b",
+            }}
+          >
+            JPG, PNG or WEBP
+          </small>
+        </div>
+
+        {/* ===================================================
+            PRODUCT NAME
+        =================================================== */}
+
         <div className="product-form__field product-form__field--full">
           <label htmlFor="product-name">
             Product Name
@@ -178,6 +308,10 @@ export function ProductFormModal({
             }
           />
         </div>
+
+        {/* ===================================================
+            CATEGORY
+        =================================================== */}
 
         <div className="product-form__field">
           <label htmlFor="product-category">
@@ -212,6 +346,10 @@ export function ProductFormModal({
           </select>
         </div>
 
+        {/* ===================================================
+            PREPARATION DESTINATION
+        =================================================== */}
+
         <div className="product-form__field">
           <label htmlFor="product-destination">
             Preparation Destination
@@ -239,11 +377,16 @@ export function ProductFormModal({
             <option value="BAR">
               Bar
             </option>
+
             <option value="PATISSERIE">
               Patisserie
             </option>
           </select>
         </div>
+
+        {/* ===================================================
+            SELLING PRICE
+        =================================================== */}
 
         <div className="product-form__field">
           <label htmlFor="product-price">
@@ -265,6 +408,10 @@ export function ProductFormModal({
           />
         </div>
 
+        {/* ===================================================
+            COST PRICE
+        =================================================== */}
+
         <div className="product-form__field">
           <label htmlFor="product-cost">
             Cost Price (MAD)
@@ -285,6 +432,10 @@ export function ProductFormModal({
           />
         </div>
 
+        {/* ===================================================
+            STOCK
+        =================================================== */}
+
         <div className="product-form__field">
           <label htmlFor="product-stock">
             Stock Quantity
@@ -303,6 +454,10 @@ export function ProductFormModal({
             }
           />
         </div>
+
+        {/* ===================================================
+            LOW STOCK ALERT
+        =================================================== */}
 
         <div className="product-form__field">
           <label htmlFor="product-alert">
@@ -324,6 +479,10 @@ export function ProductFormModal({
             }
           />
         </div>
+
+        {/* ===================================================
+            STATUS - EDIT ONLY
+        =================================================== */}
 
         {isEditing && (
           <div className="product-form__field">
@@ -355,6 +514,10 @@ export function ProductFormModal({
             </select>
           </div>
         )}
+
+        {/* ===================================================
+            DESCRIPTION
+        =================================================== */}
 
         <div className="product-form__field product-form__field--full">
           <label htmlFor="product-description">

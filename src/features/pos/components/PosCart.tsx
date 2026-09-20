@@ -1,4 +1,5 @@
 import {
+  ImageOff,
   Minus,
   Plus,
   ShoppingCart,
@@ -70,6 +71,8 @@ interface PosCartProps {
 
   onValidate: () => Promise<boolean>;
 }
+
+const API_ORIGIN = "http://localhost:8083";
 
 export function PosCart({
   cart,
@@ -193,76 +196,98 @@ export function PosCart({
             </span>
           </div>
         ) : (
-          cart.map((item) => (
-            <article
-              className="pos-cart-item"
-              key={item.product.id}
-            >
-              <div className="pos-cart-item__info">
-                <strong>
-                  {item.product.name}
-                </strong>
+          cart.map((item) => {
+            const imageSrc =
+              item.product.imageUrl
+                ? `${API_ORIGIN}${item.product.imageUrl}`
+                : null;
 
-                <p>
-                  {Number(
-                    item.product.price
-                  ).toFixed(2)}{" "}
-                  MAD
-                </p>
+            return (
+              <article
+                className="pos-cart-item"
+                key={item.product.id}
+              >
+                <div className="pos-cart-item__main">
+                  <div className="pos-cart-item__image">
+                    {imageSrc ? (
+                      <img
+                        src={imageSrc}
+                        alt={item.product.name}
+                      />
+                    ) : (
+                      <div className="pos-cart-item__image-placeholder">
+                        <ImageOff size={17} />
+                      </div>
+                    )}
+                  </div>
 
-                <small>
-                  Available:{" "}
-                  {
-                    item.product
-                      .stockQuantity
-                  }
-                </small>
-              </div>
+                  <div className="pos-cart-item__info">
+                    <strong>
+                      {item.product.name}
+                    </strong>
 
-              <div className="pos-quantity-controls">
-                <button
-                  type="button"
-                  aria-label={`Decrease ${item.product.name}`}
-                  onClick={() =>
-                    onDecrease(
-                      item.product.id
-                    )
-                  }
-                >
-                  <Minus size={14} />
-                </button>
+                    <p>
+                      {Number(
+                        item.product.price
+                      ).toFixed(2)}{" "}
+                      MAD
+                    </p>
 
-                <span>
-                  {item.quantity}
-                </span>
+                    <small>
+                      Available:{" "}
+                      {
+                        item.product
+                          .stockQuantity
+                      }
+                    </small>
+                  </div>
+                </div>
 
-                <button
-                  type="button"
-                  aria-label={`Increase ${item.product.name}`}
-                  onClick={() =>
-                    onIncrease(
-                      item.product.id
-                    )
-                  }
-                >
-                  <Plus size={14} />
-                </button>
+                <div className="pos-quantity-controls">
+                  <button
+                    type="button"
+                    aria-label={`Decrease ${item.product.name}`}
+                    onClick={() =>
+                      onDecrease(
+                        item.product.id
+                      )
+                    }
+                  >
+                    <Minus size={14} />
+                  </button>
 
-                <button
-                  type="button"
-                  className="pos-remove-item-button"
-                  aria-label={`Remove ${item.product.name}`}
-                  onClick={() =>
-                    onRemove(
-                      item.product.id
-                    )
-                  }
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            </article>
-          ))
+                  <span>
+                    {item.quantity}
+                  </span>
+
+                  <button
+                    type="button"
+                    aria-label={`Increase ${item.product.name}`}
+                    onClick={() =>
+                      onIncrease(
+                        item.product.id
+                      )
+                    }
+                  >
+                    <Plus size={14} />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="pos-remove-item-button"
+                    aria-label={`Remove ${item.product.name}`}
+                    onClick={() =>
+                      onRemove(
+                        item.product.id
+                      )
+                    }
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              </article>
+            );
+          })
         )}
       </div>
 

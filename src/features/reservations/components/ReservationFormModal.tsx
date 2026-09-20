@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Plus, X } from "lucide-react";
+import axios from "axios";
 
 import { BaseModal } from "../../../shared/components/BaseModal";
 
@@ -169,59 +170,80 @@ export function ReservationFormModal({
   };
 
   const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
 
-    if (!form.customerId) {
-      toast.error("Please select a customer");
-      return;
+  if (!form.customerId) {
+    toast.error("Please select a customer");
+    return;
+  }
+
+  if (!form.diningTableId) {
+    toast.error("Please select a dining table");
+    return;
+  }
+
+  if (!form.reservationDateTime) {
+    toast.error(
+      "Reservation date and time are required"
+    );
+    return;
+  }
+
+  if (form.numberOfGuests < 1) {
+    toast.error(
+      "Number of guests must be at least 1"
+    );
+    return;
+  }
+
+  try {
+    setSaving(true);
+
+    await reservationApi.create(form);
+
+    toast.success(
+      "Reservation created successfully"
+    );
+
+    await onSuccess();
+
+    onClose();
+  } catch (error: unknown) {
+    console.error(
+      "Failed to create reservation",
+      error
+    );
+
+    let message = "Failed to create reservation";
+
+    if (axios.isAxiosError(error)) {
+      const backendData = error.response?.data;
+
+      if (typeof backendData === "string") {
+        message = backendData;
+      } else if (
+        backendData &&
+        typeof backendData === "object"
+      ) {
+        const data = backendData as {
+          message?: string;
+          error?: string;
+        };
+
+        message =
+          data.message ||
+          data.error ||
+          message;
+      }
     }
 
-    if (!form.diningTableId) {
-      toast.error("Please select a dining table");
-      return;
-    }
-
-    if (!form.reservationDateTime) {
-      toast.error(
-        "Reservation date and time are required"
-      );
-      return;
-    }
-
-    if (form.numberOfGuests < 1) {
-      toast.error(
-        "Number of guests must be at least 1"
-      );
-      return;
-    }
-
-    try {
-      setSaving(true);
-
-      await reservationApi.create(form);
-
-      toast.success(
-        "Reservation created successfully"
-      );
-
-      await onSuccess();
-
-      onClose();
-    } catch (error) {
-      console.error(
-        "Failed to create reservation",
-        error
-      );
-
-      toast.error(
-        "Failed to create reservation"
-      );
-    } finally {
-      setSaving(false);
-    }
-  };
+    toast.error(message);
+  } finally {
+    setSaving(false);
+  }
+};
 
   return (
     <BaseModal

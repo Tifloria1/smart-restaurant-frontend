@@ -25,8 +25,11 @@ function getStatusVariant(
     case "CONFIRMED":
       return "info";
 
-    case "COMPLETED":
+    case "SEATED":
       return "success";
+
+    case "COMPLETED":
+      return "neutral";
 
     case "CANCELLED":
       return "danger";
@@ -112,77 +115,117 @@ export function ReservationTable({
 
                 <td>
                   <div className="reservation-actions">
-  {reservation.status === "PENDING" && (
-    <>
-      <button
-        type="button"
-        className="secondary-button"
-        disabled={isUpdating}
-        onClick={() =>
-          onUpdateStatus(
-            reservation.id,
-            "CONFIRMED"
-          )
-        }
-      >
-        Confirm
-      </button>
 
-      <button
-        type="button"
-        className="secondary-button danger-button"
-        disabled={isUpdating}
-        onClick={() =>
-          onUpdateStatus(
-            reservation.id,
-            "CANCELLED"
-          )
-        }
-      >
-        Cancel
-      </button>
-    </>
-  )}
+                    {/* ============================= */}
+                    {/* PENDING */}
+                    {/* ============================= */}
 
-  {reservation.status === "CONFIRMED" && (
-    <>
-      <button
-        type="button"
-        className="secondary-button"
-        disabled={isUpdating}
-        onClick={() =>
-          onUpdateStatus(
-            reservation.id,
-            "COMPLETED"
-          )
-        }
-      >
-        Complete
-      </button>
+                    {reservation.status === "PENDING" && (
+                      <>
+                        <button
+                          type="button"
+                          className="secondary-button"
+                          disabled={isUpdating}
+                          onClick={() =>
+                            onUpdateStatus(
+                              reservation.id,
+                              "CONFIRMED"
+                            )
+                          }
+                        >
+                          {isUpdating
+                            ? "Updating..."
+                            : "Confirm"}
+                        </button>
 
-      <button
-        type="button"
-        className="secondary-button danger-button"
-        disabled={isUpdating}
-        onClick={() =>
-          onUpdateStatus(
-            reservation.id,
-            "CANCELLED"
-          )
-        }
-      >
-        Cancel
-      </button>
-    </>
-  )}
+                        <button
+                          type="button"
+                          className="secondary-button danger-button"
+                          disabled={isUpdating}
+                          onClick={() =>
+                            onUpdateStatus(
+                              reservation.id,
+                              "CANCELLED"
+                            )
+                          }
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
 
-  {(reservation.status === "COMPLETED" ||
-    reservation.status === "CANCELLED") && (
-    <span className="muted">
-      No actions available
-    </span>
-  )}
-</div>
+                    {/* ============================= */}
+                    {/* CONFIRMED */}
+                    {/* ============================= */}
+
+                    {reservation.status === "CONFIRMED" && (
+                      <>
+                        <button
+                          type="button"
+                          className="primary-button"
+                          disabled={isUpdating}
+                          onClick={() =>
+                            onUpdateStatus(
+                              reservation.id,
+                              "SEATED"
+                            )
+                          }
+                        >
+                          {isUpdating
+                            ? "Seating..."
+                            : "Seat"}
+                        </button>
+
+                        <button
+                          type="button"
+                          className="secondary-button danger-button"
+                          disabled={isUpdating}
+                          onClick={() =>
+                            onUpdateStatus(
+                              reservation.id,
+                              "CANCELLED"
+                            )
+                          }
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    )}
+
+                    {/* ============================= */}
+                    {/* SEATED */}
+                    {/* ============================= */}
+
+                    {reservation.status === "SEATED" && (
+                      <button
+                        type="button"
+                        className="secondary-button"
+                        disabled={isUpdating}
+                        onClick={() =>
+                          onUpdateStatus(
+                            reservation.id,
+                            "COMPLETED"
+                          )
+                        }
+                      >
+                        {isUpdating
+                          ? "Updating..."
+                          : "Complete"}
+                      </button>
+                    )}
+
+                    {/* ============================= */}
+                    {/* FINAL STATES */}
+                    {/* ============================= */}
+
+                    {(reservation.status === "COMPLETED" ||
+                      reservation.status === "CANCELLED") && (
+                      <span className="muted">
+                        No actions available
+                      </span>
+                    )}
+
+                  </div>
                 </td>
               </tr>
             );

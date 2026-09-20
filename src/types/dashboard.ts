@@ -7,6 +7,7 @@ export interface DashboardStats {
   lowStockProducts: number;
   averageOrderValue: number;
   openTables: number;
+  todayReservations: number;
 }
 
 export interface TopProduct {

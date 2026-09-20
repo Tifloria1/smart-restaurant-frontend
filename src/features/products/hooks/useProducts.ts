@@ -59,38 +59,40 @@ export function useProducts() {
     setModalOpen(false);
   };
 
-  const saveProduct = async (
-    data: CreateProductRequest
-  ) => {
-    try {
-      if (selectedProduct) {
-        await productApi.update(
-          selectedProduct.id,
-          data as UpdateProductRequest
-        );
+const saveProduct = async (
+  data: CreateProductRequest,
+  imageFile?: File | null
+) => {
+  try {
+    let savedProduct: Product;
 
-        toast.success(
-          "Product updated successfully"
-        );
-      } else {
-        await productApi.create(data);
+    if (selectedProduct) {
+      savedProduct = await productApi.update(
+        selectedProduct.id,
+        data as UpdateProductRequest
+      );
 
-        toast.success(
-          "Product created successfully"
-        );
-      }
+      toast.success("Product updated successfully");
+    } else {
+      savedProduct = await productApi.create(data);
 
-      closeModal();
+      toast.success("Product created successfully");
+    }
 
-      await loadProducts();
-    } catch (error) {
-      console.error(error);
-
-      toast.error(
-        "Failed to save product"
+    if (imageFile) {
+      await productApi.uploadImage(
+        savedProduct.id,
+        imageFile
       );
     }
-  };
+
+    closeModal();
+    await loadProducts();
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to save product");
+  }
+};
 
   const deleteProduct = async (
     productId: number

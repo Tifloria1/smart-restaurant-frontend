@@ -1,5 +1,6 @@
 import {
   AlertTriangle,
+  CalendarDays,
   Package,
   Receipt,
   ShoppingCart,
@@ -73,9 +74,13 @@ export function DashboardStatsGrid({
       icon: Table2,
     },
     {
+      title: "Today's Reservations",
+      value: stats.todayReservations ?? 0,
+      icon: CalendarDays,
+    },
+    {
       title: "Low Stock",
-      value:
-        stats.lowStockProducts ?? 0,
+      value: stats.lowStockProducts ?? 0,
       icon: AlertTriangle,
     },
   ];
@@ -96,7 +101,6 @@ export function DashboardStatsGrid({
 
             <div>
               <p>{card.title}</p>
-
               <h3>{card.value}</h3>
             </div>
           </article>

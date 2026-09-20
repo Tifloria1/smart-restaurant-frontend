@@ -40,6 +40,28 @@ export const productApi = {
     return response.data;
   },
 
+uploadImage: async (
+  id: number,
+  file: File
+): Promise<Product> => {
+  const formData = new FormData();
+
+  formData.append("file", file);
+
+  const response = await api.post<Product>(
+    `/products/${id}/image`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data;
+},
+
+
   delete: async (id: number): Promise<void> => {
     await api.delete(`/products/${id}`);
   },
